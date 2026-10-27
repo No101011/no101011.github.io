@@ -1,5 +1,16 @@
-.DS_Store
-.edge-*/
-Thumbs.db
-_live-*.png
+# 构建产物
+site/
+# 本地环境
+.venv-mk/
+.pip-cache/
+__pycache__/
+# 截图与调试
+_mk-*.png
 _shot-*.png
+_live-*.png
+_crop-*.png
+.edge-cdp/
+.edge-profile/
+# 系统
+.DS_Store
+Thumbs.db

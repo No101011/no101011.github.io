@@ -1,66 +1,90 @@
 # 玥空玹 · 个人主页
 
-极简黑白风格的个人作品集，纯 HTML + CSS + 原生 JS，无构建步骤、无外部依赖，可直接托管在 GitHub Pages。
+用 **MkDocs + Material** 构建的极简黑白个人主页。内容全是 Markdown，搜索、导航、暗色模式由 Material 提供，样式层只保留一套黑白灰设计语言。
 
-## 本地预览
+- 线上地址：<https://no101011.github.io/>
+- 仓库：<https://github.com/No101011/no101011.github.io>
 
-直接双击 `index.html` 即可。或者起一个本地服务器：
+## 本地开发
 
 ```bash
-python -m http.server 8080
-# 打开 http://localhost:8080
+# 首次：建虚拟环境并装依赖
+python -m venv .venv-mk
+.venv-mk/Scripts/python.exe -m pip install mkdocs-material   # macOS/Linux 用 .venv-mk/bin/python
 ```
 
-调试用参数：`index.html?theme=light` / `?theme=dark` 可以强制指定主题。
+```bash
+# 本地预览（热重载）：http://127.0.0.1:8000
+.venv-mk/Scripts/python.exe -m mkdocs serve
+```
+
+```bash
+# 只构建，输出到 site/
+.venv-mk/Scripts/python.exe -m mkdocs build
+```
 
 ## 目录结构
 
 ```
 .
-├── index.html    # 页面结构（所有文案都在这里）
-├── styles.css    # 全部样式与设计 token
-├── script.js     # 主题切换、滚动显现、年份
-└── README.md
+├── mkdocs.yml              # 站点配置：主题、导航、插件
+├── docs/
+│   ├── index.md            # 首页（Hero + 作品摘要 + CTA）
+│   ├── work.md             # 作品详情
+│   ├── about.md            # 关于我
+│   ├── contact.md          # 联系
+│   ├── stylesheets/
+│   │   └── extra.css       # 全部自定义样式（黑白灰设计系统）
+│   └── assets/
+│       └── favicon.svg
+└── site/                   # 构建产物（已 gitignore）
 ```
 
-## 怎么改成你自己的
+## 怎么改内容
 
-所有文案都在 `index.html` 里，按注释找：
-
-| 想改什么 | 位置 |
+| 想改什么 | 文件 |
 | --- | --- |
-| 名字、标题、简介 | `<section class="hero">` 里的 `.hero-title`、`.hero-lead` |
-| 三个项目 | `<section id="work">` 里的三张 `.card` |
-| 关于我、技术栈 | `<section id="about">` |
-| 邮箱、社交链接 | `<section id="contact">` 里的 `.mailto` 和 `.links` |
-| 状态（可接新项目等） | `.hero-facts` |
+| 首页标题、简介、状态 | `docs/index.md` 里的 `.kp-hero` 块 |
+| 首页三张项目卡 | `docs/index.md` 里的 `.kp-cards`，改标题、描述、标签、链接 |
+| 项目详情 | `docs/work.md`，一节一个项目，锚点 `{#atlas}` 之类 |
+| 关于我、技术栈 | `docs/about.md` |
+| 邮箱、社交链接 | `docs/contact.md` + 首页 CTA 里的 `mailto:` |
+| 导航增删页面 | `mkdocs.yml` 的 `nav:`，同时新建对应 `.md` |
+| 配色、字体、间距 | `docs/stylesheets/extra.css` 顶部的 `--kp-*` 变量 |
 
-换配色只改 `styles.css` 顶部的 `:root` 与 `[data-theme="dark"]` 变量：
+换主色只改这一处：
 
 ```css
 :root {
-  --bg: #fbfbf9;      /* 背景 */
-  --fg: #12120f;      /* 主文字 */
-  --muted: #74746c;   /* 次要文字 */
-  --line: rgba(18, 18, 15, 0.10);  /* 分割线 */
+  --kp-bg: #fbfbf9;      /* 背景 */
+  --kp-fg: #12120f;      /* 主文字 / 主色 */
+  --kp-muted: #74746c;   /* 次要文字 */
+  --kp-line: rgba(18, 18, 15, 0.10);  /* 分割线 */
 }
 ```
 
+## 部署
+
+```bash
+.venv-mk/Scripts/python.exe -m mkdocs gh-deploy --force
+```
+
+它会把 `site/` 推到 `gh-pages` 分支，GitHub Pages 的源设置为该分支即可。
+约 30–60 秒后生效，无需额外 CI。
+
 ## 设计约定
 
-- **字号阶梯**：`clamp()` 控制，桌面 5.4rem → 移动 2.7rem，全站只有 4 档
-- **间距**：统一用 8 的倍数，section 间距 `clamp(88px, 11vw, 152px)`
-- **颜色**：只有黑白灰，没有彩色（绿色只用在“可接新项目”的状态点）
-- **动效**：150–250ms、`cubic-bezier(.22,.61,.36,1)`，滚动只淡入一次
-- **无障碍**：`prefers-reduced-motion` 全量降级、`:focus-visible` 描边、跳过导航链接
+- **颜色**：只有黑白灰，绿点仅用于「可接新项目」状态
+- **字号**：`clamp()` 控制，全站 4 档；标题 `letter-spacing: -0.045em`
+- **间距**：8 的倍数，区块间距 `clamp(3.4rem, 8vw, 5.6rem)`
+- **动效**：150–250ms，`cubic-bezier(.22,.61,.36,1)`；`prefers-reduced-motion` 下全量关闭
+- **无障碍**：跳过导航、`:focus-visible` 描边、表格语义、WCAG AA 对比度
 
-## 部署到 GitHub Pages
+## 备注
 
-1. 把本目录推到仓库（推荐仓库名 `<你的用户名>.github.io`，这样地址就是 `https://<用户名>.github.io`）
-2. 仓库 **Settings → Pages** → Source 选 `Deploy from a branch` → 分支 `main`、目录 `/ (root)` → Save
-3. 等 1 分钟左右，访问 `https://<用户名>.github.io`
-
-改完代码后 `git push` 即可，Pages 会自动重新发布。
+Material for MkDocs 官方公告将在 **2027-05-05** 结束生命周期（安全修复到该日），
+官方推荐的后继者是 [Zensical](https://zensical.org/)，迁移时 `mkdocs.yml` 基本可复用。
+现在用着没问题，知道有这回事就行。
 
 ## 许可
 
