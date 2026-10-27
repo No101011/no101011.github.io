@@ -80,6 +80,13 @@ cd site && git init -b gh-pages && git add -A   && git commit -m "deploy"   && g
 > Python 子进程里的 MSYS 起不来（`fatal: could not read Username`）。
 > 在普通的 Git Bash / PowerShell 终端里一般没问题，或直接用上面的自动部署。
 
+
+## 交互与尺寸
+
+- **整体缩放**：`extra.css` 里 `html { font-size: 90% }`，所有 rem 尺寸等比缩小，等效浏览器 90% 缩放
+- **昼夜切换动画**：`docs/javascripts/kp-ui.js` 在点击色板开关时给 `<html>` 挂 `kp-theme-anim`，CSS 用一次性颜色过渡（`!important`）覆盖全站，700ms 后移除
+- **翻页渐入渐出**：内部链接点击时给 `.md-container` 加 `kp-leaving` 淡出 170ms 再跳转；落地页由 `kp-page-in` 关键帧淡入；`prefers-reduced-motion` 下全部关闭
+
 ## 设计约定
 
 - **颜色**：只有黑白灰，绿点仅用于「可接新项目」状态

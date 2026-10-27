@@ -11,6 +11,9 @@ theme:
   language: zh
   font: false                     # 不拉 Google Fonts，用系统字体，国内加载稳
   favicon: assets/favicon.svg
+  logo: assets/favicon.svg
+  icon:
+    repo: fontawesome/brands/github
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
@@ -38,6 +41,9 @@ theme:
 
 extra_css:
   - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/kp-ui.js
 
 markdown_extensions:
   - attr_list

@@ -5,9 +5,9 @@ site/
 .pip-cache/
 __pycache__/
 # 截图与调试
-_mk-*.png
-_shot-*.png
-_live-*.png
+_mk*.png
+_live*.png
+_shot*.png
 _crop-*.png
 .edge-cdp/
 .edge-profile/
