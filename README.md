@@ -65,12 +65,19 @@ python -m venv .venv-mk
 
 ## 部署
 
+**自动（推荐）**：`git push` 到 `main` 后，`.github/workflows/deploy.yml` 会在 Actions 里构建并推到 `gh-pages`，
+GitHub Pages 的源设置为 `gh-pages` / `root`，约 1 分钟生效。不用配任何密钥。
+
+**手动**：
+
 ```bash
-.venv-mk/Scripts/python.exe -m mkdocs gh-deploy --force
+.venv-mk/Scripts/python.exe -m mkdocs build          # 生成 site/
+cd site && git init -b gh-pages && git add -A   && git commit -m "deploy"   && git remote add origin https://github.com/No101011/no101011.github.io.git   && git push -f origin gh-pages
 ```
 
-它会把 `site/` 推到 `gh-pages` 分支，GitHub Pages 的源设置为该分支即可。
-约 30–60 秒后生效，无需额外 CI。
+> 注意：`mkdocs gh-deploy` 在本机会失败，原因是 DSH 的凭据助手是 shell 脚本，
+> Python 子进程里的 MSYS 起不来（`fatal: could not read Username`）。
+> 在普通的 Git Bash / PowerShell 终端里一般没问题，或直接用上面的自动部署。
 
 ## 设计约定
 
