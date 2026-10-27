@@ -10,7 +10,7 @@
 ```bash
 # 首次：建虚拟环境并装依赖
 python -m venv .venv-mk
-.venv-mk/Scripts/python.exe -m pip install mkdocs-material   # macOS/Linux 用 .venv-mk/bin/python
+.venv-mk/Scripts/python.exe -m pip install -r requirements.txt   # macOS/Linux 用 .venv-mk/bin/python
 ```
 
 ```bash
@@ -28,6 +28,7 @@ python -m venv .venv-mk
 ```
 .
 ├── mkdocs.yml              # 站点配置：主题、导航、插件
+├── requirements.txt        # 构建依赖（固定版本，CI 也用）
 ├── docs/
 │   ├── index.md            # 首页（Hero + 作品摘要 + CTA）
 │   ├── work.md             # 作品详情

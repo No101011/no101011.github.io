@@ -23,8 +23,8 @@ jobs:
           python-version: "3.12"
           cache: pip
 
-      - name: Install MkDocs Material
-        run: pip install mkdocs-material
+      - name: Install dependencies
+        run: pip install -r requirements.txt
 
       - name: Build and deploy to gh-pages
         run: mkdocs gh-deploy --force
