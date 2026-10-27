@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>玥空玹 — 前端工程师</title>
+<meta name="description" content="玥空玹的个人主页：前端工程、界面设计、开源项目。" />
+<meta name="color-scheme" content="light dark" />
+<meta property="og:title" content="玥空玹 — 前端工程师" />
+<meta property="og:description" content="前端工程 · 界面设计 · 开源项目" />
+<meta property="og:type" content="website" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23111110'/%3E%3Ctext x='50' y='68' font-size='54' font-family='sans-serif' fill='%23fff' text-anchor='middle'%3E玥%3C/text%3E%3C/svg%3E" />
+<link rel="stylesheet" href="styles.css" />
+<script>
+  // 尽早应用主题，避免闪烁
+  try {
+    var forced = new URLSearchParams(location.search).get('theme');
+    var saved = localStorage.getItem('theme');
+    var dark = saved ? saved === 'dark'
+      : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.dataset.theme =
+      forced === 'light' || forced === 'dark' ? forced : (dark ? 'dark' : 'light');
+  } catch (e) {}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">跳到主要内容</a>
+
+<header class="site-header" id="siteHeader">
+  <div class="wrap header-inner">
+    <a class="brand" href="#top" aria-label="玥空玹 首页">
+      <span class="brand-mark" aria-hidden="true">玥</span>
+      <span class="brand-name">玥空玹</span>
+    </a>
+
+    <nav class="nav" aria-label="主导航">
+      <a href="#work">作品</a>
+      <a href="#about">关于</a>
+      <a href="#contact">联系</a>
+    </nav>
+
+    <button class="theme-toggle" id="themeToggle" type="button"
+            aria-label="切换深浅色主题" aria-pressed="false">
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="4.2" />
+        <path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4L17 7M7 17l-1.6 1.6" />
+      </svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20.2 14.6A8.4 8.4 0 0 1 9.4 3.8a8.6 8.6 0 1 0 10.8 10.8z" />
+      </svg>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+  <!-- ── Hero ───────────────────────────────────────────── -->
+  <section class="hero wrap" id="top">
+    <div class="hero-watermark" aria-hidden="true">玥</div>
+
+    <p class="eyebrow reveal">
+      <span class="dot" aria-hidden="true"></span>
+      前端工程师 · 界面设计 · 开源
+    </p>
+
+    <h1 class="hero-title reveal">
+      把想法<br />
+      做成<span class="hl">能用的界面</span>
+    </h1>
+
+    <p class="hero-lead reveal">
+      你好，我是<strong>玥空玹</strong>。我写前端，也琢磨排版、间距和动效——
+      相信克制比堆叠更难，也更好看。
+    </p>
+
+    <div class="hero-actions reveal">
+      <a class="btn btn-solid" href="#work">
+        看看作品
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 3.5 13 8l-4.5 4.5"/></svg>
+      </a>
+      <a class="btn btn-ghost" href="mailto:hello@example.com">写封邮件</a>
+    </div>
+
+    <dl class="hero-facts reveal">
+      <div><dt>状态</dt><dd><span class="live" aria-hidden="true"></span>可接新项目</dd></div>
+      <div><dt>坐标</dt><dd>中国 · 远程</dd></div>
+      <div><dt>方向</dt><dd>React / TypeScript / 设计系统</dd></div>
+    </dl>
+  </section>
+
+  <!-- ── 作品 ───────────────────────────────────────────── -->
+  <section class="section wrap" id="work" aria-labelledby="work-title">
+    <div class="section-head reveal">
+      <h2 id="work-title"><span class="num">01</span>精选作品</h2>
+      <p class="section-note">三件占位项目，替换成你自己的即可。</p>
+    </div>
+
+    <div class="cards">
+      <article class="card reveal">
+        <div class="card-top">
+          <span class="card-index">A1</span>
+          <span class="card-year">2026</span>
+        </div>
+        <h3>数据看板 · Atlas</h3>
+        <p>面向运营的实时指标面板，深色优先，支持 12 种图表与自定义布局。</p>
+        <ul class="tags">
+          <li>React</li><li>TypeScript</li><li>D3</li>
+        </ul>
+        <a class="card-link" href="#" aria-label="查看项目 数据看板 Atlas">查看项目
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 3.5 13 8l-4.5 4.5"/></svg>
+        </a>
+      </article>
+
+      <article class="card reveal">
+        <div class="card-top">
+          <span class="card-index">A2</span>
+          <span class="card-year">2025</span>
+        </div>
+        <h3>设计系统 · Monochrome</h3>
+        <p>一套只有黑白的组件库：48 个组件、完整的 token 与无障碍规范。</p>
+        <ul class="tags">
+          <li>Design Tokens</li><li>Vite</li><li>Storybook</li>
+        </ul>
+        <a class="card-link" href="#" aria-label="查看项目 设计系统 Monochrome">查看项目
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 3.5 13 8l-4.5 4.5"/></svg>
+        </a>
+      </article>
+
+      <article class="card reveal">
+        <div class="card-top">
+          <span class="card-index">A3</span>
+          <span class="card-year">2025</span>
+        </div>
+        <h3>写作工具 · Draft</h3>
+        <p>本地优先的 Markdown 编辑器，键盘驱动，冷启动 400ms 内。</p>
+        <ul class="tags">
+          <li>Rust</li><li>Tauri</li><li>CodeMirror</li>
+        </ul>
+        <a class="card-link" href="#" aria-label="查看项目 写作工具 Draft">查看项目
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 3.5 13 8l-4.5 4.5"/></svg>
+        </a>
+      </article>
+    </div>
+  </section>
+
+  <!-- ── 关于 ───────────────────────────────────────────── -->
+  <section class="section wrap" id="about" aria-labelledby="about-title">
+    <div class="section-head reveal">
+      <h2 id="about-title"><span class="num">02</span>关于我</h2>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-copy reveal">
+        <p class="lead">
+          我做前端六年，喜欢把复杂的东西收拾干净：删掉不必要的边框，
+          统一那 8 个相近的灰色，让一个按钮在 200ms 里刚好到位。
+        </p>
+        <p>
+          工作之外写一点开源、拍一点照片、把喜欢的字体收藏到文件夹里再也不用。
+          如果你在做一个需要“看起来就该长这样”的界面，我们大概聊得来。
+        </p>
+      </div>
+
+      <div class="about-panel reveal">
+        <h3 class="panel-title">技术栈</h3>
+        <ul class="skill-list">
+          <li><span>语言</span><span>TypeScript · JavaScript · CSS</span></li>
+          <li><span>框架</span><span>React · Vue · Astro</span></li>
+          <li><span>样式</span><span>Tailwind · CSS Modules · PostCSS</span></li>
+          <li><span>工程</span><span>Vite · pnpm · GitHub Actions</span></li>
+          <li><span>设计</span><span>Figma · 设计 token · 无障碍</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 联系 ───────────────────────────────────────────── -->
+  <section class="section wrap contact" id="contact" aria-labelledby="contact-title">
+    <div class="contact-inner reveal">
+      <h2 id="contact-title">有想法？<br />聊聊看。</h2>
+      <p>不管是新项目、合作，还是只想讨论一下某个交互该怎么动，都欢迎。</p>
+      <a class="mailto" href="mailto:hello@example.com">
+        hello@example.com
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M6 4h6v6"/></svg>
+      </a>
+      <ul class="links">
+        <li><a href="https://github.com/" rel="noopener">GitHub</a></li>
+        <li><a href="https://x.com/" rel="noopener">X / Twitter</a></li>
+        <li><a href="#" rel="noopener">简历 PDF</a></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <p>© <span id="year">2026</span> 玥空玹 · 用 HTML 与 CSS 手写</p>
+    <a class="to-top" href="#top">回到顶部 ↑</a>
+  </div>
+</footer>
+
+<script src="script.js" defer></script>
+</body>
+</html>
