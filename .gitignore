@@ -1,4 +1,5 @@
-.edge-*/
-_shot-*.png
 .DS_Store
+.edge-*/
 Thumbs.db
+_live-*.png
+_shot-*.png
