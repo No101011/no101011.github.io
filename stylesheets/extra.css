@@ -70,6 +70,9 @@
 }
 
 /* ---------- 基础 ---------- */
+/* 整体缩放 90%：所有 rem 尺寸等比缩小，等效浏览器 90% 缩放 */
+html { font-size: 90%; }
+
 body {
   font-family: var(--kp-font);
   background: var(--kp-bg);
@@ -154,22 +157,23 @@ body::before {
   margin-left: 0.2rem;
 }
 
-.md-header__button.md-logo { display: none; }
-
-/* 品牌块 */
-.md-header__topic:first-child .md-ellipsis::before {
-  content: "玥";
-  display: inline-grid;
-  place-items: center;
+/* 品牌 logo：交给 Material 排版，避免伪元素导致的裁切/错位 */
+.md-header__button.md-logo {
+  display: flex;
+  align-items: center;
+  align-self: center;
+  height: 2.4rem;
+  margin: 0 0.55rem 0 0;
+  padding: 0;
+}
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
   width: 26px;
   height: 26px;
-  margin-right: 10px;
   border-radius: 8px;
-  background: var(--kp-fg);
-  color: var(--kp-bg);
-  font-size: 14px;
-  font-weight: 600;
-  vertical-align: -7px;
+}
+[data-md-color-scheme="slate"] .md-header__button.md-logo img {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
 }
 
 /* 搜索框 */
@@ -592,3 +596,54 @@ body::before {
 @media screen and (prefers-reduced-motion: reduce) {
   .kp-hl::after { animation: none; }
 }
+
+
+/* =========================================================
+   交互增强
+   ========================================================= */
+
+/* 昼夜切换：一次性颜色过渡（由 kp-ui.js 在点击时挂类，700ms 后移除） */
+html.kp-theme-anim *,
+html.kp-theme-anim *::before,
+html.kp-theme-anim *::after {
+  transition:
+    background-color 0.35s var(--kp-ease),
+    color 0.35s var(--kp-ease),
+    border-color 0.35s var(--kp-ease),
+    fill 0.35s var(--kp-ease),
+    box-shadow 0.35s var(--kp-ease) !important;
+}
+
+/* 翻页：离开时淡出，落地时淡入 */
+.md-container {
+  transition: opacity 0.18s var(--kp-ease), transform 0.18s var(--kp-ease);
+}
+.md-container.kp-leaving {
+  opacity: 0;
+  transform: translateY(-4px);
+}
+
+@media screen and (prefers-reduced-motion: no-preference) {
+  .md-main {
+    animation: kp-page-in 0.34s var(--kp-ease) both;
+  }
+}
+@keyframes kp-page-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  .md-container { transition: none; }
+  .md-main { animation: none; }
+}
+
+
+/* 移动端头部顺序：汉堡菜单排到最左，其余保持 Material 原本顺序 */
+.md-header__inner > label[for="__drawer"] { order: -1; }
