@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site, skills } from '../data/site';
+---
+
+<BaseLayout
+  title="关于我 — 玥空玹"
+  description="前端六年，关注设计系统、性能与可访问性。"
+>
+  <div class="wrap prose">
+    <h1>关于我</h1>
+
+    <p>
+      我做前端六年，喜欢把复杂的东西收拾干净：删掉不必要的边框，统一那 8 个相近的灰色，
+      让一个按钮在 200ms 里刚好到位。
+    </p>
+    <p>
+      工作之外写一点开源、拍一点照片、把喜欢的字体收藏到文件夹里再也不用。
+      如果你在做一个需要“看起来就该长这样”的界面，我们大概聊得来。
+    </p>
+
+    <h2>技术栈</h2>
+    <table>
+      <tbody>
+        {
+          skills.map(([label, value]) => (
+            <tr>
+              <th scope="row">{label}</th>
+              <td>{value}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+
+    <h2>关注的方向</h2>
+    <ul>
+      <li><strong>设计系统</strong>：让 token 而不是页面成为约束，减少“差不多但不一样”的组件</li>
+      <li><strong>性能</strong>：首屏、交互延迟、包体，能测量才谈得上优化</li>
+      <li><strong>可访问性</strong>：键盘路径、对比度、语义结构，这些不是加分项而是及格线</li>
+    </ul>
+
+    <h2>这个站点</h2>
+    <p>
+      第一版是手写的纯 HTML/CSS，第二版换成 MkDocs + Material 解决内容增长的问题，
+      现在这一版用 <strong>Astro</strong>：组件复用、零运行时 JS（除了一点点交互脚本）、
+      构建产物就是纯静态文件。
+    </p>
+    <p>
+      源码在 <a href={site.repo} rel="noopener">GitHub</a>，想抄结构直接抄，不用署名。
+    </p>
+  </div>
+</BaseLayout>

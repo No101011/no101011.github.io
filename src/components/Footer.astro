@@ -1,0 +1,15 @@
+---
+import { site } from '../data/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <p>© {year} {site.name} · 用 Astro 构建</p>
+    <p>
+      <a href={site.repo} rel="noopener">本站源码</a>
+      <span aria-hidden="true"> · </span>
+      <a href={`mailto:${site.email}`}>{site.email}</a>
+    </p>
+  </div>
+</footer>

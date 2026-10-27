@@ -1,6 +1,6 @@
 # 玥空玹 · 个人主页
 
-用 **MkDocs + Material** 构建的极简黑白个人主页。内容全是 Markdown，搜索、导航、暗色模式由 Material 提供，样式层只保留一套黑白灰设计语言。
+用 **Astro** 构建的极简黑白个人主页。纯静态输出，除少量交互脚本外没有运行时依赖。
 
 - 线上地址：<https://no101011.github.io/>
 - 仓库：<https://github.com/No101011/no101011.github.io>
@@ -8,98 +8,91 @@
 ## 本地开发
 
 ```bash
-# 首次：建虚拟环境并装依赖
-python -m venv .venv-mk
-.venv-mk/Scripts/python.exe -m pip install -r requirements.txt   # macOS/Linux 用 .venv-mk/bin/python
-```
-
-```bash
-# 本地预览（热重载）：http://127.0.0.1:8000
-.venv-mk/Scripts/python.exe -m mkdocs serve
-```
-
-```bash
-# 只构建，输出到 site/
-.venv-mk/Scripts/python.exe -m mkdocs build
+npm install      # 首次
+npm run dev      # http://localhost:4321，热更新
+npm run build    # 产物输出到 dist/
+npm run preview  # 预览构建结果
 ```
 
 ## 目录结构
 
 ```
 .
-├── mkdocs.yml              # 站点配置：主题、导航、插件
-├── requirements.txt        # 构建依赖（固定版本，CI 也用）
-├── docs/
-│   ├── index.md            # 首页（Hero + 作品摘要 + CTA）
-│   ├── work.md             # 作品详情
-│   ├── about.md            # 关于我
-│   ├── contact.md          # 联系
-│   ├── stylesheets/
-│   │   └── extra.css       # 全部自定义样式（黑白灰设计系统）
-│   └── assets/
-│       └── favicon.svg
-└── site/                   # 构建产物（已 gitignore）
+├── astro.config.mjs          # Astro 配置（site / 目录式路由）
+├── package.json
+├── src/
+│   ├── data/site.ts          # 全站文案数据：导航、项目、技术栈、联系方式
+│   ├── layouts/
+│   │   └── BaseLayout.astro  # <head>、主题初始化、全局脚本
+│   ├── components/
+│   │   ├── Header.astro      # 顶栏 + 导航（含激活态）
+│   │   ├── Footer.astro
+│   │   └── ProjectCard.astro
+│   ├── pages/
+│   │   ├── index.astro       # 首页：Hero / 作品 / 关于摘要 / CTA
+│   │   ├── work.astro        # 作品详情（锚点 #atlas 等）
+│   │   ├── about.astro
+│   │   ├── contact.astro
+│   │   └── 404.astro
+│   └── styles/global.css     # 全部样式与设计 token
+└── public/                   # 原样拷贝的静态资源
+    ├── favicon.svg
+    └── robots.txt
 ```
 
 ## 怎么改内容
 
-| 想改什么 | 文件 |
-| --- | --- |
-| 首页标题、简介、状态 | `docs/index.md` 里的 `.kp-hero` 块 |
-| 首页三张项目卡 | `docs/index.md` 里的 `.kp-cards`，改标题、描述、标签、链接 |
-| 项目详情 | `docs/work.md`，一节一个项目，锚点 `{#atlas}` 之类 |
-| 关于我、技术栈 | `docs/about.md` |
-| 邮箱、社交链接 | `docs/contact.md` + 首页 CTA 里的 `mailto:` |
-| 导航增删页面 | `mkdocs.yml` 的 `nav:`，同时新建对应 `.md` |
-| 配色、字体、间距 | `docs/stylesheets/extra.css` 顶部的 `--kp-*` 变量 |
+文案集中在 `src/data/site.ts`，改这一个文件就能换掉大部分内容：
 
-换主色只改这一处：
+| 想改什么 | 位置 |
+| --- | --- |
+| 名字、邮箱、GitHub 链接 | `src/data/site.ts` 里的 `site` |
+| 导航项 | 同文件的 `nav` |
+| 三个项目（标题/描述/标签/规格表） | 同文件的 `projects` |
+| 首页状态栏（可接新项目 / 坐标 / 方向） | 同文件的 `facts` |
+| 技术栈表格 | 同文件的 `skills` |
+| 首页大标题文案 | `src/pages/index.astro` |
+
+换配色只改 `src/styles/global.css` 顶部：
 
 ```css
 :root {
-  --kp-bg: #fbfbf9;      /* 背景 */
-  --kp-fg: #12120f;      /* 主文字 / 主色 */
-  --kp-muted: #74746c;   /* 次要文字 */
-  --kp-line: rgba(18, 18, 15, 0.10);  /* 分割线 */
+  --bg: #fbfbf9;      /* 背景 */
+  --fg: #12120f;      /* 主文字 / 主色 */
+  --muted: #74746c;   /* 次要文字 */
+  --line: rgba(18, 18, 15, 0.10);  /* 分割线 */
 }
 ```
 
+`html { font-size: 90% }` 控制整体缩放，想更紧凑改成 `85%`。
+
 ## 部署
 
-**自动（推荐）**：`git push` 到 `main` 后，`.github/workflows/deploy.yml` 会在 Actions 里构建并推到 `gh-pages`，
-GitHub Pages 的源设置为 `gh-pages` / `root`，约 1 分钟生效。不用配任何密钥。
+`git push` 到 `main` → GitHub Actions 跑 `npm ci && npm run build` →
+`peaceiris/actions-gh-pages` 把 `dist/` 推到 `gh-pages` 分支 → Pages 自动发布。
+约 1 分钟生效，不需要任何密钥。
 
-**手动**：
-
-```bash
-.venv-mk/Scripts/python.exe -m mkdocs build          # 生成 site/
-cd site && git init -b gh-pages && git add -A   && git commit -m "deploy"   && git remote add origin https://github.com/No101011/no101011.github.io.git   && git push -f origin gh-pages
-```
-
-> 注意：`mkdocs gh-deploy` 在本机会失败，原因是 DSH 的凭据助手是 shell 脚本，
-> Python 子进程里的 MSYS 起不来（`fatal: could not read Username`）。
-> 在普通的 Git Bash / PowerShell 终端里一般没问题，或直接用上面的自动部署。
-
-
-## 交互与尺寸
-
-- **整体缩放**：`extra.css` 里 `html { font-size: 90% }`，所有 rem 尺寸等比缩小，等效浏览器 90% 缩放
-- **昼夜切换动画**：`docs/javascripts/kp-ui.js` 在点击色板开关时给 `<html>` 挂 `kp-theme-anim`，CSS 用一次性颜色过渡（`!important`）覆盖全站，700ms 后移除
-- **翻页渐入渐出**：内部链接点击时给 `.md-container` 加 `kp-leaving` 淡出 170ms 再跳转；落地页由 `kp-page-in` 关键帧淡入；`prefers-reduced-motion` 下全部关闭
+GitHub Pages 的源设置为：**分支 `gh-pages` / 目录 `/`**。
+（改这个设置要用 `PUT /repos/{owner}/{repo}/pages`，不是 PATCH。）
 
 ## 设计约定
 
 - **颜色**：只有黑白灰，绿点仅用于「可接新项目」状态
 - **字号**：`clamp()` 控制，全站 4 档；标题 `letter-spacing: -0.045em`
-- **间距**：8 的倍数，区块间距 `clamp(3.4rem, 8vw, 5.6rem)`
-- **动效**：150–250ms，`cubic-bezier(.22,.61,.36,1)`；`prefers-reduced-motion` 下全量关闭
-- **无障碍**：跳过导航、`:focus-visible` 描边、表格语义、WCAG AA 对比度
+- **间距**：8 的倍数，区块间距 `clamp(3.2rem, 8vw, 5.4rem)`
+- **动效**：150–250ms，`cubic-bezier(.22,.61,.36,1)`
+  - 标题下划线扫入（`@keyframes sweep`）
+  - 滚动淡入（IntersectionObserver，`.reveal`）
+  - 昼夜切换一次性颜色过渡（`html.theme-anim`，700ms 后移除）
+  - 翻页淡出 170ms + 落地淡入（`body.is-leaving` / `.page-in`）
+- **无障碍**：跳过导航、`:focus-visible` 描边、`prefers-reduced-motion` 全量降级
 
-## 备注
+## 历史版本
 
-Material for MkDocs 官方公告将在 **2027-05-05** 结束生命周期（安全修复到该日），
-官方推荐的后继者是 [Zensical](https://zensical.org/)，迁移时 `mkdocs.yml` 基本可复用。
-现在用着没问题，知道有这回事就行。
+仓库历史里有前两版，需要对比或回滚可以直接 checkout：
+
+- `dbcf421` — MkDocs + Material 版本
+- `d02f4aa` — 手写 HTML / CSS / JS 版本
 
 ## 许可
 

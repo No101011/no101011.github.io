@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout title="联系 — 玥空玹" description="项目合作、长期协作、技术咨询，欢迎来聊。">
+  <div class="wrap prose">
+    <h1>联系</h1>
+    <p>
+      有想法就聊聊，不管是新项目、合作，还是只想讨论某个交互该怎么动。
+    </p>
+
+    <p>
+      <a class="btn btn-solid" href={`mailto:${site.email}`}>{site.email} ↗</a>
+    </p>
+
+    <h2>其他入口</h2>
+    <table>
+      <tbody>
+        <tr>
+          <th scope="row">GitHub</th>
+          <td><a href={site.github} rel="noopener">github.com/No101011</a></td>
+        </tr>
+        <tr>
+          <th scope="row">本站源码</th>
+          <td><a href={site.repo} rel="noopener">no101011.github.io</a></td>
+        </tr>
+        <tr>
+          <th scope="row">简历</th>
+          <td>待补充</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>合作方式</h2>
+    <ul>
+      <li><strong>项目制</strong>：从设计稿到上线，按阶段交付</li>
+      <li><strong>长期协作</strong>：每周固定投入，跟着产品走</li>
+      <li><strong>技术咨询</strong>：设计系统、性能优化、无障碍专项</li>
+    </ul>
+
+    <p>回复时间一般在 24 小时内。</p>
+  </div>
+</BaseLayout>

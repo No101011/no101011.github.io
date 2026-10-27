@@ -1,0 +1,36 @@
+---
+interface Project {
+  id: string;
+  index: string;
+  year: string;
+  title: string;
+  desc: string;
+  tags: string[];
+  specs: string[][];
+  detail: string;
+}
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<article class="card reveal">
+  <p class="card-top">
+    <span>{project.index}</span>
+    <span>{project.year}</span>
+  </p>
+  <h3>{project.title}</h3>
+  <p>{project.desc}</p>
+  <p class="tags">
+    {project.tags.map((tag) => <span>{tag}</span>)}
+  </p>
+  <a class="card-link" href={`/work/#${project.id}`}>
+    查看项目
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M3 8h9M8.5 3.5 13 8l-4.5 4.5"></path>
+    </svg>
+  </a>
+</article>

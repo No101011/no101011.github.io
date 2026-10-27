@@ -1,14 +1,15 @@
-# 构建产物
+# 依赖与构建产物
+node_modules/
+dist/
 site/
+.astro/
+.npm-cache/
 # 本地环境
 .venv-mk/
 .pip-cache/
 __pycache__/
 # 截图与调试
-_mk*.png
-_live*.png
-_shot*.png
-_crop-*.png
+_*.png
 .edge-cdp/
 .edge-profile/
 # 系统

@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { projects } from '../data/site';
+---
+
+<BaseLayout
+  title="精选作品 — 玥空玹"
+  description="三件前端项目：实时数据看板、黑白设计系统、本地优先的写作工具。"
+>
+  <div class="wrap prose">
+    <h1>精选作品</h1>
+    <p>
+      三件占位项目，替换成你自己的即可。下面的结构可以直接复用：一句话定位 → 做了什么 → 结果。
+    </p>
+
+    {
+      projects.map((project) => (
+        <section id={project.id}>
+          <h2>{project.title}</h2>
+          <p>{project.desc}</p>
+
+          <table>
+            <tbody>
+              {project.specs.map(([label, value]) => (
+                <tr>
+                  <th scope="row">{label}</th>
+                  <td>{value}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <p>
+            <strong>做的事</strong>：{project.detail}
+          </p>
+        </section>
+      ))
+    }
+  </div>
+</BaseLayout>
